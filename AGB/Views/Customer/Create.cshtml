@@ -1,0 +1,117 @@
+@model AparnaGoldBuyers.Models.CustomerViewModel
+@{
+    ViewBag.Title = "Add Customer";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="customer-page-header">
+    <div>
+        <h2 class="customer-page-title">Add Customer</h2>
+        <p class="customer-page-subtitle">Capture customer details, ornaments and proof documents in one place.</p>
+    </div>
+    <a href="@Url.Action("List", "Customer")" class="btn btn-soft">View Customer List</a>
+</div>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        Please correct the highlighted fields and try again.
+    </div>
+}
+
+<form id="customerForm" method="post" enctype="multipart/form-data">
+    <div class="customer-shell">
+        <div class="customer-panel">
+            <div class="customer-panel-header">
+                <strong>Customer Details</strong>
+                <span>Basic information</span>
+            </div>
+            <div class="customer-panel-body">
+                <div class="customer-grid">
+                    <div class="form-group">
+                        <label>Name</label>
+                        @Html.TextBoxFor(m => m.Customer.FullName, new { @class = "form-control", placeholder = "Enter customer name" })
+                        @Html.ValidationMessageFor(m => m.Customer.FullName)
+                    </div>
+
+                    <div class="form-group">
+                        <label>Mobile</label>
+                        @Html.TextBoxFor(m => m.Customer.Mobile, new { @class = "form-control", placeholder = "Enter mobile number", inputmode = "numeric" })
+                        @Html.ValidationMessageFor(m => m.Customer.Mobile)
+                    </div>
+
+                    <div class="form-group">
+                        <label>Date</label>
+                        @Html.TextBoxFor(m => m.Customer.CustomerDate, new { @class = "form-control", type = "date" })
+                        @Html.ValidationMessageFor(m => m.Customer.CustomerDate)
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label>Account Details</label>
+                        @Html.TextAreaFor(m => m.Customer.AccountDetails, new { @class = "form-control", placeholder = "Bank or account details" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="customer-panel">
+            <div class="customer-panel-header">
+                <strong>Ornaments</strong>
+                <button type="button" id="addOrnament" class="btn btn-primary btn-sm">+ Add Ornament</button>
+            </div>
+            <div class="customer-panel-body">
+                <div class="table-wrap">
+                    <table class="table table-bordered customer-table" id="ornamentTable">
+                        <thead>
+                            <tr>
+                                <th style="width: 25%;">Image</th>
+                                <th style="width: 20%;">Grams</th>
+                                <th style="width: 20%;">Purity</th>
+                                <th style="width: 20%;">Buying Price</th>
+                                <th style="width: 15%;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="customer-panel">
+            <div class="customer-panel-header">
+                <strong>Proof Documents</strong>
+                <button type="button" id="addProof" class="btn btn-primary btn-sm">+ Add Proof</button>
+            </div>
+            <div class="customer-panel-body">
+                <div class="table-wrap">
+                    <table class="table table-bordered customer-table" id="proofTable">
+                        <thead>
+                            <tr>
+                                <th style="width: 35%;">Document Name</th>
+                                <th style="width: 50%;">File</th>
+                                <th style="width: 15%;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="action-row">
+            <a href="@Url.Action("List", "Customer")" class="btn btn-default">Cancel</a>
+            <button type="submit" class="btn btn-success">Save Customer</button>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <script src="~/Scripts/customers/CustomerCreate.js"></script>
+}

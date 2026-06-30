@@ -1,0 +1,39 @@
+@model AparnaGoldBuyers.Models.DashboardGoldRateViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Dashboard";
+}
+
+<h2 class="dashboard-title">Today's Gold Rate in India</h2>
+<p class="dashboard-subtitle">Date: @Model.DisplayDate.ToString("dd MMMM yyyy")</p>
+
+@if (Model.IsAvailable)
+{
+    <div class="gold-rate-grid">
+        <div class="gold-rate-card">
+            <div class="gold-rate-label">24K Gold Rate (1 gram)</div>
+            <p class="gold-rate-value">@Model.RatePerGram24K.ToString("N2") rupees</p>
+        </div>
+
+        <div class="gold-rate-card">
+            <div class="gold-rate-label">24K Gold Rate (10 grams)</div>
+            <p class="gold-rate-value">@Model.RatePer10Grams24K.ToString("N2") rupees</p>
+        </div>
+
+        <div class="gold-rate-card">
+            <div class="gold-rate-label">22K Gold Rate (1 gram)</div>
+            <p class="gold-rate-value">@Model.RatePerGram22K.ToString("N2") rupees</p>
+        </div>
+    </div>
+
+    if (Model.LastUpdatedIndia.HasValue)
+    {
+        <p class="gold-rate-footer">Last updated: @Model.LastUpdatedIndia.Value.ToString("dd MMM yyyy hh:mm tt") IST</p>
+    }
+}
+else
+{
+    <div class="alert alert-warning">
+        @Model.ErrorMessage
+    </div>
+}

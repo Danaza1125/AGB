@@ -1,0 +1,83 @@
+@model IEnumerable<AparnaGoldBuyers.Models.CustomerModel>
+@{
+    ViewBag.Title = "Customer List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .customer-list-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .customer-list-card {
+        background: #fff;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+    }
+
+    .customer-list-table {
+        margin-bottom: 0;
+    }
+
+    .customer-list-table thead {
+        background: #f3e3af;
+    }
+
+    .customer-list-table th {
+        border-bottom: none !important;
+        color: #5a4300;
+    }
+
+    .empty-state {
+        text-align: center;
+        color: #777;
+        padding: 30px 0;
+    }
+</style>
+
+<div class="customer-list-header">
+    <div>
+        <h2 style="margin:0;">Customer List</h2>
+        <p style="margin:6px 0 0; color:#666;">Showing customer name, phone number and created date.</p>
+    </div>
+    <a href="@Url.Action("Create", "Customer")" class="btn btn-primary">Add Customer</a>
+</div>
+
+<div class="customer-list-card">
+    @if (Model != null && Model.Any())
+    {
+        <div class="table-responsive">
+            <table class="table table-striped customer-list-table">
+                <thead>
+                    <tr>
+                        <th>Customer Name</th>
+                        <th>Phone Number</th>
+                        <th>Created On</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var customer in Model)
+                    {
+                        <tr>
+                            <td>@customer.FullName</td>
+                            <td>@customer.Mobile</td>
+                            <td>
+                                @(customer.CreatedOn == DateTime.MinValue
+                                    ? "-"
+                                    : customer.CreatedOn.ToString("dd MMM yyyy hh:mm tt"))
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="empty-state">No customers found.</div>
+    }
+</div>
